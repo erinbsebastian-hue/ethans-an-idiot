@@ -6,14 +6,14 @@ interface ConverterProps {
   onResult: (entry: Omit<HistoryEntry, 'id' | 'timestamp'>) => void;
 }
 
-const SECTIONS = [
+type RawInputs = { english: string; math: string; reading: string; science: string };
+
+const SECTIONS: { key: keyof RawInputs; label: string; max: number; time: string; optional?: boolean }[] = [
   { key: 'english', label: 'English', max: RAW_MAX.english, time: '35 min' },
   { key: 'math',    label: 'Math',    max: RAW_MAX.math,    time: '50 min' },
   { key: 'reading', label: 'Reading', max: RAW_MAX.reading, time: '40 min' },
   { key: 'science', label: 'Science', max: RAW_MAX.science, time: '40 min', optional: true },
-] as const;
-
-type RawInputs = { english: string; math: string; reading: string; science: string };
+];
 
 export default function Converter({ onResult }: ConverterProps) {
   const [raw, setRaw] = useState<RawInputs>({ english: '', math: '', reading: '', science: '' });
